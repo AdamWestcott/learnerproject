@@ -4,7 +4,7 @@ import firebase from "./firebase";
 
 function App() {
 const [learners, setLearners] =useState([]);
-const [loading, setLoading] =useState(false);
+const [loading, setLoading] =useState(false); /* Constant to show when the information is loading*/
 
 const ref = firebase.firestore().collection("learners");
 
@@ -34,8 +34,8 @@ return (
     <h1>learners</h1>
     {learners.map((learner) => (
       <div key={learner.id}>
-        <h2>{learner.firstName} {learner.lastName}</h2>
-        <p>{learner.score}</p>
+        <h2>{learner.firstName + " " + learner.secondName}</h2>
+        <p>{"Score =" + " " + learner.score}</p>
       </div>
     
     
