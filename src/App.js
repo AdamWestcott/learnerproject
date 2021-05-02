@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState,useEffect } from "react";
+import firebase from "./firebase";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const [learners, setLearners] =useState([]);
+const [loading, setLoading] =useState(false);
+
+const ref = firebase.firestore().collection("learners");
+
+function getLearners() {
+  setLoading(true);
+  ref.onSnapshot((querySnapshot) => {
+  const items =[];
+  querySnapshot.forEach((doc) => {
+    items.push(doc.data());
+  });
+  setLearners(items);
+  setLoading(false);
+  });
+  
 }
+
+useEffect(() =>{
+  getLearners();
+},[]);
+
+if(loading){
+  return <h1>Loading...</h1>;
+}
+
+return (
+  <div>
+    <h1>learners</h1>
+    {learners.map((learner) => (
+      <div key={learner.id}>
+        <h2>{learner.firstName} {learner.lastName}</h2>
+        <p>{learner.score}</p>
+      </div>
+    
+    
+    ))}
+  </div>
+)
+}
+
 
 export default App;
