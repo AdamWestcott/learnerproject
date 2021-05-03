@@ -1,5 +1,6 @@
 import firebase from "firebase/app" /* imports firebase */
-import "firebase/firestore"
+import "firebase/firestore";
+import "firebase/auth";
 /* */
 /*object which contains firebase values */
 const firebaseConfiguration = {
